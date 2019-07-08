@@ -2,24 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>
-        Random Form
+        Register a new account
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body>
     <center>
+        <h4 th:text="${entryStatus.EntryMessage}"/>
         <h1>
-            Random Form
+            Register a new account!
         </h1>
-        <form action="#" th:action="@{/random_form}" th:object="${user}" method="POST">
+        <form action="#" th:action="@{/new_user}" th:object="${user}" method="POST">
             <h4>
                 Username : <input type="text" th:field="*{userName}" placeholder="(username)"/>
             </h4>
             <h4>
                 Password : <input type="password" th:field="*{userPass}" placeholder="(password)" />
             </h4>
-            <input type="submit" value="Login!" />  <input type="reset" value="ReEnter!" />
+            <input type="submit" value="Register!" />  <input type="reset" value="Reset Fields!" />
         </form>
     </center>
 </body>
