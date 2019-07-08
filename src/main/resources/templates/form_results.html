@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>
+        RandForm Results!
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <center>
+        <h1>
+            You Entered : 
+        </h1>
+        <h4 th:text="'Username : ' + ${user.userName}" />
+        <h4 th:text="'Password (in Encrypted Format): ' + ${user.userPass}" />
+        <br/>
+        <a href="/random_form"><h2> Logout! </h2></a>
+    </center>
+</body>
+
+
+</html>

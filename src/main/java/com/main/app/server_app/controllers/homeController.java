@@ -10,14 +10,12 @@ import com.main.app.server_app.common.consoleLogger;
 @Controller
 public class homeController {
     
-    private consoleLogger cl = new consoleLogger();
-    
     @GetMapping("/")
     public String returnHomePage(@RequestParam(name="user_name", required=false, defaultValue="Random User") String name){
-        cl.info("Entered into homeController- returnHomePage()");
-        cl.info("----------------------------------------");
-        cl.info(name + " entered the server!");
-        cl.info("----------------------------------------");
+        consoleLogger.info("Entered into homeController- returnHomePage()");
+        consoleLogger.info("----------------------------------------");
+        consoleLogger.info(name + " entered the server!");
+        consoleLogger.info("----------------------------------------");
         return "index.html";
     }
 

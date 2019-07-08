@@ -8,11 +8,11 @@ import org.slf4j.LoggerFactory;
 public class consoleLogger {
     private static Logger logger = LoggerFactory.getLogger(DemoApplication.class);    
     
-    public void info(String msg){
+    public static void info(String msg){
         logger.info(msg);
     }
 
-    public void errorMsg(String msg){
+    public static void errorMsg(String msg){
         logger.error(msg);
     }
 
