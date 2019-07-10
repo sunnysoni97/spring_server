@@ -13,9 +13,11 @@
             You Entered : 
         </h1>
         <h4 th:text="'Username : ' + ${user.userName}" />
-        <h4 th:text="'Password (in Encrypted Format): ' + ${user.userPass}" />
-        <br/>
-        <a href="/random_form"><h2> Logout! </h2></a>
+        <h4> Profile Image : </h4>
+        <img th:src="@{${'images/'+ user.userName+ '.png'}}" height="500px" width="500px" />
+        <form action="logout" method="POST">
+            <input type="submit" value="Logout!" />
+        </form>
     </center>
 </body>
 
