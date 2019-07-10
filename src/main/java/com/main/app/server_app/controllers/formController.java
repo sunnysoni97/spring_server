@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 import javax.servlet.http.HttpServletResponse;
 
 import com.main.app.server_app.common.consoleLogger;
+import com.main.app.server_app.common.passMethods;
+import com.main.app.server_app.dao.UserOp;
 import com.main.app.server_app.models.EntryStatus;
 import com.main.app.server_app.models.User;
 import com.main.app.server_app.processors.ValidateNewUser;
@@ -69,7 +71,16 @@ class formControllerPosts {
         ValidateNewUser vnu = new ValidateNewUser();
         int flag = vnu.checkData(user);
         if (flag == 0) {
-            httpServletResponse.sendRedirect("register_details");
+            user.setUserPass(passMethods.encrypt(user.getUserPass()));
+            UserOp userOp = new UserOp();
+            if (userOp.registerUser(user))
+                httpServletResponse.sendRedirect("register_details");
+            else
+            {
+                flag = 1;
+                sessionStatus.setComplete();
+                httpServletResponse.sendRedirect("new_user?entry_code=" + flag);
+            }
         } else {
             sessionStatus.setComplete();
             httpServletResponse.sendRedirect("new_user?entry_code=" + flag);
