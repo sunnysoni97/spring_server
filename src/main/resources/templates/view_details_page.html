@@ -13,11 +13,8 @@
             You Entered : 
         </h1>
         <h4 th:text="'Username : ' + ${user.userName}" />
-        <form action="upload_file" method="POST" enctype="multipart/form-data">
-            <h4>Select Image to Upload : <input type="file" name="file" /><br/><br/>
-            <input type="submit" value="Upload!" />
-            </h4>
-        </form>
+        <h4> Profile Image : </h4>
+        <img th:src="@{${'images/'+ user.userName+ '.png'}}" height="500px" width="500px" />
         <form action="logout" method="POST">
             <input type="submit" value="Logout!" />
         </form>
