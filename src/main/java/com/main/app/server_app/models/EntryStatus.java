@@ -20,6 +20,14 @@ public class EntryStatus{
         {
             EntryMessage = "Entered Passwords do not match!";
         }
+        else if (EntryCode == 4)
+        {
+            EntryMessage = "User Account Doesnt Exist!";
+        }
+        else if (EntryCode == 5)
+        {
+            EntryMessage = "Incorrect Password Entered!";
+        }
         else
         {
             EntryMessage = "Unknown Entry Code!";
