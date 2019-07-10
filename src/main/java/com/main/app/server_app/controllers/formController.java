@@ -9,7 +9,6 @@ import com.main.app.server_app.models.EntryStatus;
 import com.main.app.server_app.models.User;
 import com.main.app.server_app.processors.ValidateNewUser;
 
-import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,15 +26,8 @@ public class formController{
     @RequestMapping(value="/new_user", method={RequestMethod.GET})
     public String serveForm(Model model, @RequestParam(name="entry_code", required=false, defaultValue="0") int entryCode){
         consoleLogger.info("Entered into formController - serveForm()");
-        if(entryCode == 0){
-            consoleLogger.info("serveForm entry code = 0");
-            model.addAttribute("entryStatus", new EntryStatus(0));
-        }
-        else
-        {
-            consoleLogger.info("serveForm entry code = 1");
-            model.addAttribute("entryStatus", new EntryStatus(1));
-        }
+        consoleLogger.info("serveForm entry code = " + entryCode);
+        model.addAttribute("entryStatus", new EntryStatus(entryCode));
         model.addAttribute("user", new User());
         return "user_reg_form";
     }
@@ -53,18 +45,26 @@ public class formController{
 @SessionAttributes("user")
 class formControllerPosts{
     
+    @RequestMapping(value="/logout", method={RequestMethod.POST})
+    public void logout(HttpServletResponse httpServletResponse, SessionStatus sessionStatus) throws IOException
+    {
+        consoleLogger.info("Entered into formControllerPosts - logout()");
+        sessionStatus.setComplete();
+        httpServletResponse.sendRedirect("");
+    }
+   
     @RequestMapping(value="/new_user", method={RequestMethod.POST})
     public void serveResults(@ModelAttribute User user, HttpServletResponse httpServletResponse, SessionStatus sessionStatus) throws IOException{
         consoleLogger.info("Entered into formControllerPosts - serveResults()");
-        MutableBoolean flag = new MutableBoolean(false);
-        ValidateNewUser.checkData(flag, user);
-        if (flag.isTrue()){
+        ValidateNewUser vnu = new ValidateNewUser();
+        int flag = vnu.checkData(user);
+        if (flag==0){
             httpServletResponse.sendRedirect("register_details");
         }
         else
         {
             sessionStatus.setComplete();
-            httpServletResponse.sendRedirect("new_user?entry_code=1");
+            httpServletResponse.sendRedirect("new_user?entry_code="+flag);
         }
     }
 
