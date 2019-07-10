@@ -9,9 +9,20 @@ public class EntryStatus{
         if (EntryCode == 0){
             EntryMessage = "";
         }
-        else
+        else if (EntryCode == 1)
         {
             EntryMessage = "Try registering with a different username!";
+        }
+        else if (EntryCode == 2){
+            EntryMessage = "Password Entered is too short!";
+        }
+        else if (EntryCode == 3)
+        {
+            EntryMessage = "Entered Passwords do not match!";
+        }
+        else
+        {
+            EntryMessage = "Unknown Entry Code!";
         }
     }
 
