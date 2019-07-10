@@ -51,6 +51,16 @@ public class formController {
         return "view_details_page";
     }
 
+    @RequestMapping(value = "/user_login", method = { RequestMethod.GET })
+    public String serveLogin(Model model,
+            @RequestParam(name = "entry_code", required = false, defaultValue = "0") int entryCode) {
+        consoleLogger.info("Entered into formController - serveLogin()");
+        consoleLogger.info("serveForm entry code = " + entryCode);
+        model.addAttribute("entryStatus", new EntryStatus(entryCode));
+        model.addAttribute("user", new User());
+        return "user_login";
+    }
+
 }
 
 @Controller
@@ -104,4 +114,20 @@ class formControllerPosts {
         }
     }
 
+    @RequestMapping(value = "/user_login", method = { RequestMethod.POST })
+    public void postLogin(HttpServletResponse httpServletResponse, @ModelAttribute User user, SessionStatus sessionStatus) throws IOException {
+        user.setUserPass(passMethods.encrypt(user.getUserPass()));
+        consoleLogger.info("Entered into formControllerPosts - postLogin()");
+        UserOp userOp = new UserOp();
+        int flag = userOp.loginUser(user);
+        if (flag == 0){
+            httpServletResponse.sendRedirect("view_details");
+        }
+        else
+        {
+            sessionStatus.setComplete();
+            httpServletResponse.sendRedirect("user_login?entry_code=" + flag);
+        }
+        
+    }
 }

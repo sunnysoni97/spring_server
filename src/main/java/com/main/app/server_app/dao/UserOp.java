@@ -53,11 +53,11 @@ public class UserOp{
             rs = stmt.executeQuery(query);
             if(rs.next())
             {
-                consoleLogger.info("Duplicate Value Exists in db (users)!");
+                consoleLogger.info("User exists in the DB!");
                 return true;
             }
             else
-            {   consoleLogger.info("users db is clean for insertion!");
+            {   consoleLogger.info("User doesnt exist in the DB!");
                 return false;
             }
         } catch(SQLException se){
@@ -80,5 +80,41 @@ public class UserOp{
         }
         closeConnection();
         return res;
+    }
+
+    private Boolean verifyCredentials(User user){
+        query = "select * from users where user_name = '" + user.getUserName() + "' and user_pass = '"+ user.getUserPass() + "';";
+        try{
+            rs = stmt.executeQuery(query);
+            if(rs.next())
+            {
+                consoleLogger.info("User Credentials Verified!");
+                return true;
+            }
+            else
+            {   consoleLogger.info("User Credentials unverified!");
+                return false;
+            }
+        } catch(SQLException se){
+            consoleLogger.errorMsg("Error while fetching user data - sqlexception");
+            return false;
+        }
+    }
+
+
+    public int loginUser(User user){
+        createConnection();
+        int flag=0;
+        if(checkDuplicateUser(user)){
+            if(!verifyCredentials(user)){
+                flag=5;
+            }
+        }
+        else
+        {
+            flag=4;
+        }
+        closeConnection();
+        return flag;
     }
 }

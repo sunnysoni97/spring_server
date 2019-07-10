@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>
-        User Registration
+        User Login
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
@@ -11,24 +11,19 @@
     <center>
         <h4 th:text="${entryStatus.EntryMessage}"/>
         <h1>
-            Register a new account!
+            Login to an Existing Account!
         </h1>
-        <form action="#" th:action="@{/new_user}" th:object="${user}" method="POST">
+        <form action="#" th:action="@{/user_login}" th:object="${user}" method="POST">
             <h4>
                 Username : <input type="text" th:field="*{userName}" placeholder="(username)"/>
             </h4>
             <h4>
-                Password : <input type="password" th:field="*{userPass}" placeholder="(atleast 8 character long)" />
+                Password : <input type="password" th:field="*{userPass}" placeholder="(password)" />
             </h4>
-            <h4>
-                Confirm Password : <input type="password" th:field="*{userPassConfirm}" placeholder="(re-enter-password)" />
-            </h4>
-            <input type="submit" value="Register!" />  <input type="reset" value="Reset Fields!" />
+            <input type="submit" value="Login!" />  <input type="reset" value="Reset Fields!" />
         </form>
         <a href="/"><h5> Return to Home! </h5></a>
     </center>
 </body>
-
-
 
 </html>
